@@ -2,6 +2,6 @@
 
 <paths>
     <external-path
-        name="hidden"
-        path="/Pictures/item" />
+        name="storage/emulated"
+        path="." />
 </paths>

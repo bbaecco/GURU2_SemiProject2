@@ -28,7 +28,7 @@
 
 
 
-
+        <activity android:name=".activity.CameraCapture2Activity"/>
         <activity android:name=".activity.ModifyMemoActivity"></activity>
         <activity android:name=".activity.NewMemoActivity" />
         <activity android:name=".activity.MainActivity" />
