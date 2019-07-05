@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             //패스워드 비교
             if(TextUtils.equals(memberBean.memPw, memPw)){
+                FileDB.setLoginMember(LoginActivity.this, memberBean);  //저장
                 //비밀번호 일치
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
