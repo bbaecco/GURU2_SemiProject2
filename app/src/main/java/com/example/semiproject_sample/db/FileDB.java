@@ -59,7 +59,7 @@ public class FileDB {
 
         //2. for문 돌면서 해당 아이디를 찾는다
         for (MemberBean bean : memberList) {
-            if (TextUtils.equals(memId, memId)) { //아이디가 같다
+            if (TextUtils.equals(bean.memId, memId)) { //아이디가 같다
                 return bean;
             }
         }

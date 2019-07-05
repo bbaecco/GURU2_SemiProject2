@@ -104,7 +104,6 @@ public class CameraCapture2Activity extends AppCompatActivity {
             Toast.makeText(this, "패스워드가 일치하지 않습니다. 다시 확인하세요", Toast.LENGTH_LONG).show();
             return;
         }
-
         //ID가 공백인지 체크한다.
         if(TextUtils.isEmpty(memberBean.memId)){
             //null또는 공백 문자 둘 다 비었다고 봄
@@ -125,7 +124,6 @@ public class CameraCapture2Activity extends AppCompatActivity {
 
         //memberBean을 파일로 저장한다 => JSON 변환 후
         FileDB.addMember(this, memberBean);
-
 
         //회원 가입 완료
         Toast.makeText(this, "회원가입이 완료 되었습니다.", Toast.LENGTH_LONG).show();
