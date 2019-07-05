@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.semiproject_sample">
 
+    <!--권한 선언-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>  <!--외부 메모리 접근-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>  <!--카메라-->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +14,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+        <!--카메라 사용을 위한 provider 선언-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.semiproject_sample"
+            android:grantUriPermissions="true">   <!--authorities에는 패키지명 써줘야 함-->
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
+
+
+
+
         <activity android:name=".activity.ModifyMemoActivity"></activity>
         <activity android:name=".activity.NewMemoActivity" />
         <activity android:name=".activity.MainActivity" />
