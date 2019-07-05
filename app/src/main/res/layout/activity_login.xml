@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.LoginActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="안드로이드 메모장"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="#FCCCCC"
+        android:gravity="center_horizontal"
+        android:text="1조"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/EditID"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="ID입력"/>
+
+    <EditText
+        android:id="@+id/EditPW"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="비밀번호 입력"
+        android:inputType="textPassword"/>
+
+    <!--로그인, 회원가입 버튼 레이아웃-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_margin="10dp">
+
+        <Button
+            android:id="@+id/BtnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그인"
+            android:layout_marginRight = "10dp"
+            android:backgroundTint="#cfcffc"/>
+
+        <Button
+            android:id="@+id/BtnSignin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원가입"
+            android:backgroundTint="#cfcffc"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>
