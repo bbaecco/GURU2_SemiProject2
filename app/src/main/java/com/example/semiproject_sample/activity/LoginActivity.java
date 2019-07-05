@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private View.OnClickListener mBtnLoginClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            //fileDB에서 일단 찾고 널이 넘어왔을 경우에는 없는 회원 토스트 / 있을 경우는 패스워드가 일치하는지 보고 패스워드 까지 맞으면 메인 화면으로 넘어간다
 
         }
     };

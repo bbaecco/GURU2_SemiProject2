@@ -12,16 +12,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import com.example.semiproject_sample.R;
+import com.example.semiproject_sample.bean.MemberBean;
+import com.example.semiproject_sample.db.FileDB;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -86,7 +91,45 @@ public class CameraCapture2Activity extends AppCompatActivity {
 
     //회원가입 작업 시작
     private void joinProcess(){
+        MemberBean memberBean = new MemberBean();
+        memberBean.memId = medtId.getText().toString();
+        memberBean.memName = medtName.getText().toString();
+        memberBean.photoPath = mPhotoPath;
 
+        String pw1 = medtPw1.getText().toString();
+        String pw2 = medtPw2.getText().toString();
+        //서로 패스워드가 일치하는지 확인        //equals(string 타입이 같은지 확인하는 함수)를 바로 쓰면 null의 위험이 ㅇㅇ > TextUtils의 equlas를 쓰면 둘 중 하나가 null이 안나도록 알아서 확인해줌
+        if(!TextUtils.equals(pw1, pw2)){
+            //일치하지 않을 경우
+            Toast.makeText(this, "패스워드가 일치하지 않습니다. 다시 확인하세요", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //ID가 공백인지 체크한다.
+        if(TextUtils.isEmpty(memberBean.memId)){
+            //null또는 공백 문자 둘 다 비었다고 봄
+            Toast.makeText(this, "회원 아이디를 입력하세요." , Toast.LENGTH_LONG).show();
+            return;  //진행하면 안되니까
+        }
+        //이미 존재하는 회원 아이디를 찾는다.
+        MemberBean findMemBean =  FileDB.getFindMember(this, memberBean.memId);
+        if(findMemBean != null){
+            //해당되는 아이디를 찾았다.
+            Toast.makeText(this, "입력하신 아이디는 이미 존재합니다.", Toast.LENGTH_LONG).show();
+            return;  //진행하면 안되니까
+        }
+
+        memberBean.memPw = pw1;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+        memberBean.memRegDate = sdf.format(new Date());
+
+        //memberBean을 파일로 저장한다 => JSON 변환 후
+        FileDB.addMember(this, memberBean);
+
+
+        //회원 가입 완료
+        Toast.makeText(this, "회원가입이 완료 되었습니다.", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     private void takePicture() {
@@ -130,7 +173,7 @@ public class CameraCapture2Activity extends AppCompatActivity {
 
     private void sendPicture() {
         Bitmap bitmap = BitmapFactory.decodeFile(mPhotoPath);
-        Bitmap resizedBmp = getResizedBitmap(bitmap, 4, 100, 100);
+        Bitmap resizedBmp = getResizedBitmap(bitmap, 4, 100, 100);  //이미지 사이즈를 줄여줌 > size를 1로 하면 원본 크기로 나옴 > 4는 1/4사이즈
 
         bitmap.recycle();
 
@@ -152,6 +195,9 @@ public class CameraCapture2Activity extends AppCompatActivity {
         }
         Bitmap rotatedBmp = roate(resizedBmp, exifDegree);
         mimgProfile.setImageBitmap( rotatedBmp );
+
+        //사진이 저장된 경로 보여주기
+        Toast.makeText(this, "사진 경로 : " + mPhotoPath, Toast.LENGTH_SHORT).show();
     }
 
     private int exifOrientToDegree(int exifOrientation) {
