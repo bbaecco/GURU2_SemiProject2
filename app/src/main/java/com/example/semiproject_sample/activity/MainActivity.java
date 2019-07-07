@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.addTab(mTabLayout.newTab().setText("회원 정보"));
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        //VuewPager 생성
+        //ViewPager 생성
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
         //Tab이랑 viewpager랑 연결
         mViewPager.setAdapter(adapter);
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter{
+    static class ViewPagerAdapter extends FragmentPagerAdapter{
 
         private int tabCount;
 

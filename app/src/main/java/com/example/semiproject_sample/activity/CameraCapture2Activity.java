@@ -34,6 +34,7 @@ import java.util.Date;
 
 /**
  * 4.4 kitkat 까지 지원하는 카메라 예제.
+ * JoinActivity를 이거로 바꾼 것
  */
 public class CameraCapture2Activity extends AppCompatActivity {
 
