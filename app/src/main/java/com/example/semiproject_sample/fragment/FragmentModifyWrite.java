@@ -11,7 +11,6 @@ import com.example.semiproject_sample.R;
 
 public class FragmentModifyWrite extends Fragment {
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

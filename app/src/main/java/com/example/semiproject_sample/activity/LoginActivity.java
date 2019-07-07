@@ -21,7 +21,6 @@ public class LoginActivity extends AppCompatActivity {
     //멤버 변수 선언
     private EditText medtId, medtPw;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
