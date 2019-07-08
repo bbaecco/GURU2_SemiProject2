@@ -119,7 +119,8 @@ public class FragmentMemo extends Fragment {
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //memoBean.delMemo();
+                    MemberBean memberBean = FileDB.getLoginMember(getActivity());
+//                    FileDB.delMemo(getActivity(), memberBean.memId, );
                 }
             });
             //수정 버튼 클릭 이벤트
