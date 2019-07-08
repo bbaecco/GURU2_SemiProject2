@@ -7,9 +7,15 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.semiproject_sample.R;
 import com.example.semiproject_sample.fragment.FragmentCamera;
+import com.example.semiproject_sample.fragment.FragmentMember;
+import com.example.semiproject_sample.fragment.FragmentMemo;
 import com.example.semiproject_sample.fragment.FragmentMemoWrite;
 import com.example.semiproject_sample.fragment.FragmentModifyCamera;
 import com.example.semiproject_sample.fragment.FragmentModifyWrite;
@@ -19,25 +25,31 @@ public class NewMemoActivity extends AppCompatActivity {
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
+    private ViewPagerAdapter mViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_memo);
+
         mTabLayout = findViewById(R.id.tabLayout);
         mViewPager = findViewById(R.id.viewPager);
 
-        //탭 생성
-        mTabLayout.addTab(mTabLayout.newTab().setText("글쓰기"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("사진 찍기"));
+        findViewById(R.id.btnCancel).setOnClickListener(mBtnClick);
+        findViewById(R.id.btnSave).setOnClickListener(mBtnClick);
+
+        //탭생성
+        mTabLayout.addTab(mTabLayout.newTab().setText("메모"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("회원정보"));
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //ViewPager 생성
-        MainActivity.ViewPagerAdapter adapter = new MainActivity.ViewPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
-        //Tab이랑 viewpager랑 연결
-        mViewPager.setAdapter(adapter);
+        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),
+                mTabLayout.getTabCount());
+        //tab 이랑 viewpager 랑 연결
+        mViewPager.setAdapter(mViewPagerAdapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
-        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
@@ -47,18 +59,52 @@ public class NewMemoActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) { }
         });
+    }
+
+    private View.OnClickListener mBtnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            //어떤 버튼이 클릭 됐는지 구분한다
+            switch (view.getId()) {
+                case R.id.btnCancel:
+                    //처리
+                    finish();
+                    break;
+
+                case R.id.btnSave:
+                    //처리
+                    saveProc();
+                    break;
+            }
+        }
+    };
+
+    //저장버튼 저장처리
+    private void saveProc() {
+
+        //1.첫번째 프래그먼트의 EditText 값을 받아온다.
+        FragmentMemoWrite f0 = (FragmentMemoWrite)mViewPagerAdapter.instantiateItem(mViewPager,0);
+        //2.두번째 프래그먼트의 mPhotoPath 값을 가져온다.
+        FragmentCamera f1 = (FragmentCamera)mViewPagerAdapter.instantiateItem(mViewPager,1);
+
+        EditText edtWriteMemo = f0.getView().findViewById(R.id.edtWriteMemo);
+        String memoStr = edtWriteMemo.getText().toString();
+        String photoPath = f1.mPhotoPath;
+
+        Log.e("SEMI", "memoStr: " + memoStr + ", photoPath: " + photoPath);
+        Toast.makeText(this, "memoStr: " + memoStr + ", photoPath: " + photoPath, Toast.LENGTH_LONG).show();
+
+        //TODO 파일DB에 저장처리
 
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
-
         private int tabCount;
 
-        public ViewPagerAdapter(FragmentManager fm, int count){
+        public ViewPagerAdapter(FragmentManager fm, int count) {
             super(fm);
             this.tabCount = count;
         }
-
         @Override
         public Fragment getItem(int position) {
             switch (position){
@@ -72,6 +118,7 @@ public class NewMemoActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return tabCount;}  //실수하면 안됨! 만들어 놓은걸로 바꿔야 함
+            return tabCount;
+        }
     }
 }

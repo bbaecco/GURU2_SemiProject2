@@ -4,21 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.FragmentMemo"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="10">
 
     <!-- TODO: Update blank fragment layout -->
     <Button
         android:id="@+id/btnNewMemo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:text="새메모 작성"
         android:textSize="20dp"
         android:background="#cfcffc"/>
 
     <ListView
-        android:id="@+id/listViewMemo"
+        android:id="@+id/lstMemo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="9">
     </ListView>
 
 </LinearLayout>

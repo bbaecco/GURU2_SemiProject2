@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -22,39 +23,22 @@ import java.util.zip.Inflater;
 
 public class FragmentMemo extends Fragment {
 
-    Button btnNewMemo;
+    public ListView mLstMemo;  //mainActivity에서 접근할 일이 있어서 public으로 선언
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_memo, container, false);
 
-        btnNewMemo = view.findViewById(R.id.btnNewMemo);
-
-        //새메모 작성 버튼 클릭 이벤트
-        btnNewMemo.setOnClickListener(new View.OnClickListener() {
+        mLstMemo = view.findViewById(R.id.lstMemo);
+        view.findViewById(R.id.btnNewMemo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(), NewMemoActivity.class);
+                //새메모 작성 화면으로 이동
+                Intent i = new Intent(getActivity(), NewMemoActivity.class);
                 startActivity(i);
             }
         });
-
-//        ImageView imgProfile = view.findViewById(R.id.imgProfile);
-//        TextView txtMemId = view.findViewById(R.id.txtMemId);
-//        TextView txtMemName = view.findViewById(R.id.txtMemName);
-//        TextView txtMemPw = view.findViewById(R.id.txtMemPw);
-//        TextView txtMemDate = view.findViewById(R.id.txtMemDate);
-//
-//        //파일 DB에서 가져온다
-//        MemberBean memberBean = FileDB.getLoginMember(getActivity());
-//
-//        imgProfile.setImageURI( Uri.fromFile(new File(memberBean.photoPath)) );
-//        txtMemId.setText(memberBean.memId);
-//        txtMemName.setText(memberBean.memName);
-//        txtMemPw.setText(memberBean.memPw);
-//        txtMemDate.setText(memberBean.memRegDate);
 
 
         return view;

@@ -8,9 +8,13 @@
 
     <!-- TODO: Update blank fragment layout -->
     <EditText
+        android:id="@+id/edtWriteMemo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:hint="내용을 입력해주세요"
+        android:singleLine="false"
+        android:maxLines="10"
+        android:lines="10"
         android:gravity="top"/>
 
 </LinearLayout>
