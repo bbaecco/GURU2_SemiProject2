@@ -52,7 +52,7 @@ public class FragmentCamera extends Fragment {
         }, 0);
 
         //사진찍기
-        mimgCamera = view.findViewById(R.id.imgProfile);
+        mimgCamera = view.findViewById(R.id.imgCamera);
         Button btnCamera = view.findViewById(R.id.btnCamera);
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +171,7 @@ public class FragmentCamera extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //카메라로부터 오는 데이터를 취득한다.
-        if(resultCode == Activity.RESULT_OK) {
+        if(resultCode == getActivity().RESULT_OK) {
             if(requestCode == REQUEST_IMAGE_CAPTURE) {
                 sendPicture();
             }

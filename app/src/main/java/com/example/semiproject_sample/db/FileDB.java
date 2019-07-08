@@ -130,7 +130,7 @@ public class FileDB {
         //고유 메모 ID를 생성해준다.
 //      memoBean.memoID = memoList.size() + 1;
         memoBean.memoID = System.currentTimeMillis();
-        memoList.add(memoBean);
+        memoList.add(0, memoBean);
         findMember.memoList = memoList;
 
         //저장
