@@ -1,6 +1,7 @@
 package com.example.semiproject_sample.fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -170,7 +171,7 @@ public class FragmentCamera extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //카메라로부터 오는 데이터를 취득한다.
-        if(resultCode == getActivity().RESULT_OK) {
+        if(resultCode == Activity.RESULT_OK) {
             if(requestCode == REQUEST_IMAGE_CAPTURE) {
                 sendPicture();
             }

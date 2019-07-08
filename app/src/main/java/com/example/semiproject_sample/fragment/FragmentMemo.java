@@ -41,6 +41,7 @@ public class FragmentMemo extends Fragment {
         });
 
 
+
         return view;
     }
 

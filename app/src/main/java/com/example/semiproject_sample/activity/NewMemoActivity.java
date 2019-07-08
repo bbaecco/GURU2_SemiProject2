@@ -113,21 +113,32 @@ public class NewMemoActivity extends AppCompatActivity {
         memoBean.memoPicPath = f1.mPhotoPath;
         memoBean.memo = memo.getText().toString();
         memoBean.memoDate = date.getText().toString();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
 
         //메모가 공백인지 체크한다.
-        if(TextUtils.isEmpty(memoBean.memo)){
+        if(memoStr == null){
             Toast.makeText(this, "메모를 입력하세요", Toast.LENGTH_LONG).show();
             return;
         }
+//        if(TextUtils.isEmpty(memoBean.memo)){
+//            Toast.makeText(this, "메모를 입력하세요", Toast.LENGTH_LONG).show();
+//            return;
+//        }
 
         //사진이 공백인지 체크한다.
-        if(TextUtils.isEmpty(memoBean.memoPicPath)){
+        if(photoPath == null){
             Toast.makeText(this, "사진을 찍으세요", Toast.LENGTH_LONG).show();
             return;
         }
+//        if(TextUtils.isEmpty(memoBean.memoPicPath)){
+//            Toast.makeText(this, "사진을 찍으세요", Toast.LENGTH_LONG).show();
+//            return;
+//        }
 
         //memoBean을 파일로 저장한다 => JSON 변환 후
-        FileDB.addMemo(this, memoBean);
+        FileDB.addMemo(NewMemoActivity.this,memoStr, memoBean);
+//        FileDB.addMemo(NewMemoActivity.this, photoPath, memoBean);
+        //FileDB.setMemo(NewMemoActivity.this, memoStr ,memoBean);
 
         //메모 작성 완료
         Toast.makeText(this, "메모가 작성되었습니다.", Toast.LENGTH_LONG).show();
