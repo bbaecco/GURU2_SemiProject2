@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return tabCount;  //실수하면 안됨! 만들어 놓은걸로 바꿔야 함
-        }
+            return tabCount; } //실수하면 안됨! 만들어 놓은걸로 바꿔야 함
     }
 }

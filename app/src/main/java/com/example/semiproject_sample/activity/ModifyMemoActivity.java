@@ -42,10 +42,14 @@ public class ModifyMemoActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
             }
+
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) { }
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
             @Override
-            public void onTabReselected(TabLayout.Tab tab) { }
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
         });
 
     }
@@ -54,14 +58,14 @@ public class ModifyMemoActivity extends AppCompatActivity {
 
         private int tabCount;
 
-        public ViewPagerAdapter(FragmentManager fm, int count){
+        public ViewPagerAdapter(FragmentManager fm, int count) {
             super(fm);
             this.tabCount = count;
         }
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     return new FragmentModifyWrite();
                 case 1:
@@ -72,7 +76,7 @@ public class ModifyMemoActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return tabCount;  //실수하면 안됨! 만들어 놓은걸로 바꿔야 함
-        }
+            return tabCount;
+        }  //실수하면 안됨! 만들어 놓은걸로 바꿔야 함
     }
 }

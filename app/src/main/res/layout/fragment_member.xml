@@ -41,4 +41,11 @@
         android:text="날짜 : boom"
         android:layout_marginTop="20dp"/>
 
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="로그아웃"/>
+
 </LinearLayout>
