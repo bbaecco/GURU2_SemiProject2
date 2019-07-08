@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,7 +42,7 @@ public class CameraCapture2Activity extends AppCompatActivity {
 
 
     private ImageView mimgProfile;
-    //사진이 저장도니 경로 - onActivityResult()로부터 받는 데이터
+    //사진이 저장된 경로 - onActivityResult()로부터 받는 데이터
     private Uri mCaptureUri;
     //사진이 저장된 단말기상의 실제 경로
     public String mPhotoPath;
@@ -176,7 +175,7 @@ public class CameraCapture2Activity extends AppCompatActivity {
 
         bitmap.recycle();
 
-        //사진이 캡쳐되서 들어오면 뒤집어져 있다. 이애를 다시 원상복구 시킨다.
+        //사진이 캡쳐되서 들어오면 뒤집어져 있다. 이 애를 다시 원상복구 시킨다.
         ExifInterface exif = null;
         try {
             exif = new ExifInterface(mPhotoPath);
@@ -192,7 +191,7 @@ public class CameraCapture2Activity extends AppCompatActivity {
         } else {
             exifDegree = 0;
         }
-        Bitmap rotatedBmp = roate(resizedBmp, exifDegree);
+        Bitmap rotatedBmp = rotate(resizedBmp, exifDegree);
         mimgProfile.setImageBitmap( rotatedBmp );
 
         //사진이 저장된 경로 보여주기
@@ -212,7 +211,7 @@ public class CameraCapture2Activity extends AppCompatActivity {
         return 0;
     }
 
-    private Bitmap roate(Bitmap bmp, float degree) {
+    private Bitmap rotate(Bitmap bmp, float degree) {
         Matrix matrix = new Matrix();
         matrix.postRotate(degree);
         return Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(),

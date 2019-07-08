@@ -10,7 +10,7 @@ public class MemberBean {
     public String memName;
     public String memPw;
     public String memRegDate;
-    public List<MemberBean> memoList;
+    public List<MemoBean> memoList;
 
 
 }
