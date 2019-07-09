@@ -141,8 +141,31 @@ public class FileDB {
     public static void setMemo(Context context, String memId, MemoBean memoBean) {
         //TODO
         //전체 멤버 리스트를 취득한다
-        MemberBean memberBean = getFindMember(context, memId);
-       // List<MemoBean> memoList = getMemoList(context, memId);
+        MemberBean memberBean = getLoginMember(context);
+        if (memberBean == null || memberBean.memoList == null) {
+            return;
+        }
+        List<MemoBean> memoList = memberBean.memoList;
+        for (int i = 0; i < memoList.size(); i++) {
+            MemoBean mBean = memoList.get(i);
+            if (mBean.memoID == memoBean.memoID) {
+                //찾았다.
+                memoList.set(i, memoBean);  // 교체
+                break;
+            }
+        }
+        //업데이트 된 메모 리스트를 저장
+        memberBean.memoList = memoList;
+        setMember(context, memberBean);
+
+
+    }
+      /* 내 코드
+       public static void setMemo(Context context, String memId, MemoBean memoBean) {
+        //TODO
+        //전체 멤버 리스트를 취득한다
+        MemberBean memberBean = getLoginMember(context);
+      // List<MemoBean> memoList = getMemoList(context, memId);
         if (memberBean.memoList.size() == 0) return;
 
         for (int i = 0; i < memberBean.memoList.size(); i++) {  //for each
@@ -153,19 +176,23 @@ public class FileDB {
                 break;
             }
         }
+    }*/
+
+    public static MemoBean getMemo(Context context, String memId, long memoId) {
+        MemberBean memberBean = getLoginMember(context);
+        List<MemoBean> memoList = memberBean.memoList;
+        if(memoList == null) return null;
+
+        for(MemoBean bean : memoList){
+            if(bean.memoID == memoId){
+                //찾았다
+                return null;
+            }
+        }
+        return null;
     }
-
-    //메모 삭제
-    public static void delMemo(Context context, String memId, long memoId) {
-        //TODO
-        MemberBean memberBean = getFindMember(context, memId);
-        List<MemoBean> memoList = getMemoList(context, memId);
-//        memoList.memoID = memoList.size() - 1;
-        memberBean.memoList.remove(memoId - 1);
-
-    }
-
-    public static MemoBean findMemo(Context context, String memId, long memoId) {
+    /*findMemo = getMemo임 내 코드드
+    pulic static MemoBean findMemo(Context context, String memId, long memoId) {
         List<MemoBean> memoList = getMemoList(context, memId);
 
         MemoBean memoBean = null;
@@ -175,7 +202,36 @@ public class FileDB {
             }
         }
         return memoBean;
+    }*/
+
+    //메모 삭제
+    public static void delMemo(Context context, String memId, long memoId) {
+        //데이터는 어댑터가 가지고 있기 때문에 DB에서도 삭제하고 어댑터에서도 삭제를 해야 한다
+        //TODO
+        MemberBean memberBean = getLoginMember(context);
+        List<MemoBean> memoList = memberBean.memoList;
+        if(memoList == null) return;
+
+        for(int i = 0; i < memoList.size(); i++){
+            MemoBean mBean = memoList.get(i);
+            if(mBean.memoID == memoId){
+                //찾았다
+                memoList.remove(i);
+                break;
+            }
+        }
     }
+
+    /*내 코드
+    //메모 삭제
+    public static void delMemo(Context context, String memId, long memoId) {
+        //TODO
+        MemberBean memberBean = getFindMember(context, memId);
+        List<MemoBean> memoList = getMemoList(context, memId);
+//        memoList.memoID = memoList.size() - 1;
+        memberBean.memoList.remove(memoId - 1);
+
+    }*/
 
     //메모 리스트 취득
     public static List<MemoBean> getMemoList(Context context, String memId) {
