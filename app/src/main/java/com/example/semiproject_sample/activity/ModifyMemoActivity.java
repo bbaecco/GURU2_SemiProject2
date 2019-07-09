@@ -34,11 +34,8 @@ public class ModifyMemoActivity extends AppCompatActivity {
 
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private NewMemoActivity.ViewPagerAdapter mViewPagerAdapter;
-
-    //멤버변수
-    private TextView memo, date;
-    private Button btnModify, btnDelete, btnDetail;
+//    private ModifyMemoActivity.ViewPagerAdapter mViewPagerAdapter;
+    private ViewPagerAdapter fViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +44,6 @@ public class ModifyMemoActivity extends AppCompatActivity {
 
         mTabLayout = findViewById(R.id.tabLayout);
         mViewPager = findViewById(R.id.viewPager);
-        memo = findViewById(R.id.txtMemo);
-        date = findViewById(R.id.txtMemDate);
 
         findViewById(R.id.btnCancel).setOnClickListener(mBtnClick);
         findViewById(R.id.btnSave).setOnClickListener(mBtnClick);
@@ -59,9 +54,9 @@ public class ModifyMemoActivity extends AppCompatActivity {
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //ViewPager 생성
-        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
+        fViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
         //tab 이랑 viewpager 랑 연결
-        mViewPager.setAdapter(mViewPagerAdapter);
+        mViewPager.setAdapter(fViewPagerAdapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -87,54 +82,11 @@ public class ModifyMemoActivity extends AppCompatActivity {
 
                 case R.id.btnModify:
                     //수정 버튼 클릭시 처리
-                    saveProc();
+                    //TODO
                     break;
             }
         }
     };
-
-    //저장버튼 저장처리
-    private void saveProc() {
-        //1.첫번째 프래그먼트의 EditText 값을 받아온다.
-        FragmentMemoWrite f0 = (FragmentMemoWrite)mViewPagerAdapter.instantiateItem(mViewPager,0);
-        //2.두번째 프래그먼트의 mPhotoPath 값을 가져온다.
-        FragmentCamera f1 = (FragmentCamera)mViewPagerAdapter.instantiateItem(mViewPager,1);
-
-        EditText edtWriteMemo = f0.getView().findViewById(R.id.edtWriteMemo);
-        String memoStr = edtWriteMemo.getText().toString();
-        String photoPath = f1.mPhotoPath;
-
-        Log.e("SEMI", "memoStr: " + memoStr + ", photoPath: " + photoPath);
-        Toast.makeText(this, "memoStr: " + memoStr + ", photoPath: " + photoPath, Toast.LENGTH_LONG).show();
-
-        //TODO 파일DB에 저장처리
-        MemoBean memoBean = new MemoBean();
-        memoBean.memoPicPath = photoPath;
-        memoBean.memo = memoStr;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
-        memoBean.memoDate = sdf.format(new Date());
-
-
-        //메모가 공백인지 체크한다.
-        if( TextUtils.isEmpty(memoStr) ){
-            Toast.makeText(this, "메모를 입력하세요", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        //사진이 공백인지 체크한다.
-        if(photoPath == null){
-            Toast.makeText(this, "사진을 찍으세요", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        //memoBean을 파일로 저장한다 => JSON 변환 후
-        MemberBean memberBean = FileDB.getLoginMember(this);
-        FileDB.addMemo(ModifyMemoActivity.this, memberBean.memId, memoBean);
-
-        //메모 작성 완료
-        Toast.makeText(this, "메모가 작성되었습니다.", Toast.LENGTH_LONG).show();
-        finish();
-    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private int tabCount;
@@ -147,9 +99,9 @@ public class ModifyMemoActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new FragmentMemoWrite();
+                    return new FragmentModifyWrite();
                 case 1:
-                    return new FragmentCamera();
+                    return new FragmentModifyCamera();
             }
             return null;
         }

@@ -120,10 +120,10 @@ public class FragmentMemo extends Fragment {
                 @Override
                 public void onClick(View view) {
                     MemberBean memberBean = FileDB.getLoginMember(getActivity());
-//                    FileDB.delMemo(getActivity(), memberBean.memId, );
+                    FileDB.delMemo(getActivity(), memberBean.memId, (int)memoBean.memoID);
                 }
             });
-            //수정 버튼 클릭 이벤트
+            //상세보기 버튼 클릭 이벤트
             btnDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
