@@ -34,7 +34,7 @@ import java.util.Date;
 public class FragmentCamera extends Fragment {
 
     //사진이 저장된 단말기상의 실제 경로
-    public String mPhotoPath = "/sdcard/hello/world.jpg";  //dummy data
+    public String mPhotoPath = null;
     private Uri mCaptureUri;
     private ImageView mimgCamera;
     public static final int REQUEST_IMAGE_CAPTURE = 200;

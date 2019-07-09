@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -36,6 +37,7 @@ public class ModifyMemoActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 //    private ModifyMemoActivity.ViewPagerAdapter mViewPagerAdapter;
     private ViewPagerAdapter fViewPagerAdapter;
+    private Button btnDelete, btnModify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +47,8 @@ public class ModifyMemoActivity extends AppCompatActivity {
         mTabLayout = findViewById(R.id.tabLayout);
         mViewPager = findViewById(R.id.viewPager);
 
-        findViewById(R.id.btnCancel).setOnClickListener(mBtnClick);
-        findViewById(R.id.btnSave).setOnClickListener(mBtnClick);
+        findViewById(R.id.btnDelete).setOnClickListener(mBtnClick);
+        findViewById(R.id.btnModify).setOnClickListener(mBtnClick);
 
         //탭생성
         mTabLayout.addTab(mTabLayout.newTab().setText("글쓰기"));
@@ -75,18 +77,61 @@ public class ModifyMemoActivity extends AppCompatActivity {
         public void onClick(View view) {
             //어떤 버튼이 클릭 됐는지 구분한다
             switch (view.getId()) {
-                case R.id.btnCancel:
-                    //취소 버튼 클릭시 처리
-                    finish();
-                    break;
-
                 case R.id.btnModify:
                     //수정 버튼 클릭시 처리
-                    //TODO
+                    modifyProc();
+                    break;
+                case R.id.btnDelete:
+                    //취소 버튼 클릭시 처리
+                    finish();
                     break;
             }
         }
     };
+
+    //수정버튼 수정처리
+    private void modifyProc() {
+        //1.첫번째 프래그먼트의 EditText 값을 받아온다.
+//        FragmentMemoWrite f0 = (FragmentMemoWrite)fViewPagerAdapter.instantiateItem(mViewPager,0);   //기존 내용 받아오려면 FragmentMeoWrite로 써야하나..?
+        FragmentModifyWrite f0 = (FragmentModifyWrite)fViewPagerAdapter.instantiateItem(mViewPager,0);
+        //2.두번째 프래그먼트의 mPhotoPath 값을 가져온다.
+        FragmentModifyCamera f1 = (FragmentModifyCamera)fViewPagerAdapter.instantiateItem(mViewPager,1);
+
+        EditText edtWriteMemo = f0.getView().findViewById(R.id.edtWriteMemo);
+        String memoStr = edtWriteMemo.getText().toString();
+        String photoPath = f1.mPhotoPath;
+
+        //TODO 파일DB에 저장처리
+        MemoBean memoBean = new MemoBean();
+        memoBean.memoPicPath = photoPath;
+        memoBean.memo = memoStr;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+        memoBean.memoDate = sdf.format(new Date());
+
+
+        //메모가 공백인지 체크한다.
+        if( TextUtils.isEmpty(memoStr) ){
+            Toast.makeText(this, "메모를 입력하세요", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //사진이 공백인지 체크한다.
+        if(photoPath == null){
+            Toast.makeText(this, "사진을 찍으세요", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //memoBean을 파일로 저장한다 => JSON 변환 후
+        MemberBean memberBean = FileDB.getLoginMember(this);
+        FileDB.addMemo(ModifyMemoActivity.this, memberBean.memId, memoBean);
+
+        //메모 작성 완료
+        Log.e("SEMI", "memoStr: " + memoStr + ", photoPath: " + photoPath);
+        Toast.makeText(this, "memoStr: " + memoStr + ", photoPath: " + photoPath, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "메모가 수정되었습니다.", Toast.LENGTH_LONG).show();
+
+        finish();
+    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private int tabCount;

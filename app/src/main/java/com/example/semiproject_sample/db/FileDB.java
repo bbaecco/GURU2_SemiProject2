@@ -156,7 +156,7 @@ public class FileDB {
     }
 
     //메모 삭제
-    public static void delMemo(Context context, String memId, int memoId) {
+    public static void delMemo(Context context, String memId, long memoId) {
         //TODO
         MemberBean memberBean = getFindMember(context, memId);
         List<MemoBean> memoList = getMemoList(context, memId);

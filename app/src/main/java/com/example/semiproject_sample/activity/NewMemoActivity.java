@@ -105,9 +105,6 @@ public class NewMemoActivity extends AppCompatActivity {
         String memoStr = edtWriteMemo.getText().toString();
         String photoPath = f1.mPhotoPath;
 
-        Log.e("SEMI", "memoStr: " + memoStr + ", photoPath: " + photoPath);
-        Toast.makeText(this, "memoStr: " + memoStr + ", photoPath: " + photoPath, Toast.LENGTH_LONG).show();
-
         //TODO 파일DB에 저장처리
         MemoBean memoBean = new MemoBean();
         memoBean.memoPicPath = photoPath;
@@ -134,6 +131,8 @@ public class NewMemoActivity extends AppCompatActivity {
 
         //메모 작성 완료
         Toast.makeText(this, "메모가 작성되었습니다.", Toast.LENGTH_LONG).show();
+        Log.e("SEMI", "memoStr: " + memoStr + ", photoPath: " + photoPath);
+        Toast.makeText(this, "memoStr: " + memoStr + ", photoPath: " + photoPath, Toast.LENGTH_LONG).show();
         finish();
     }
 
